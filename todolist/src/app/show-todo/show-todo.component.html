@@ -1,0 +1,11 @@
+
+<div>
+    <ng-container *ngFor="let todo of todos">
+        <div>
+        {{todo.itemID}}: <button (click)="completeItem(todo)">Complete</button> {{todo.itemName}} {{checkCompletion(todo.itemCompleted)}}
+        </div>
+    </ng-container>
+    <input type="text" [(ngModel)]="newItemName" />
+    <br />
+    <button (click)="addItem()">Add Item</button>
+</div>
