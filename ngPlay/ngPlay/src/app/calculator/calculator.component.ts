@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CalcButton } from '../calc-button';
 import { DOCUMENT } from '@angular/common';
 import { CalcBox } from '../calc-box';
-import { isNull } from '@angular/compiler/src/output/output_ast';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-calculator',
@@ -24,6 +22,8 @@ export class CalculatorComponent implements OnInit {
     {btnID:'btn9', btnStr:'9', btnVal:9},
     {btnID:'btnPL', btnStr:'+',btnVal:0},
     {btnID:'btnMN', btnStr:'-',btnVal:0},
+    {btnID:'btnML', btnStr:'*',btnVal:0},
+    {btnID:'btnDV', btnStr:'/',btnVal:0},
   ]
   tb:CalcBox = {boxID:'tb1', boxText:''};
 
@@ -54,7 +54,7 @@ export class CalculatorComponent implements OnInit {
     3) do the math accordingly in sets of 2
   */
 
-    let operand1 = 0;
+    let operand1 = parseInt(tb.boxText);
     let operand2:Number;
 
     for(let i = 0;i<tb.boxText.length;i++)
@@ -76,6 +76,24 @@ export class CalculatorComponent implements OnInit {
         }
         operand2 = parseInt(tb.boxText[i + 1]);
         operand1 = (+operand1 - +operand2);
+      }
+      else if(tb.boxText[i] == '*')
+      {
+        if(operand1 == 0)
+        {
+          operand1 = parseInt(tb.boxText[i - 1]);
+        }
+        operand2 = parseInt(tb.boxText[i + 1]);
+        operand1 = (+operand1 * +operand2);
+      }
+      else if(tb.boxText[i] == '/')
+      {
+        if(operand1 == 0)
+        {
+          operand1 = parseInt(tb.boxText[i - 1]);
+        }
+        operand2 = parseInt(tb.boxText[i + 1]);
+        operand1 = (+operand1 / +operand2);
       }
     }
     tb.boxText = operand1.toString();

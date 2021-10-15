@@ -2,20 +2,21 @@
 
 
 <div id="CalcContainer">
-
     <input type="text" id="tb" [(ngModel)]='tb.boxText'><br/>
-    <button id="btnDL"(click)='DeleteEnd(tb)'>DEL</button>&#20;
-    <button id="btnCL"(click)='ClearAll(tb)'>C</button><br/>
-    <button id="btn7"[(ngModel)]='btns[6].btnStr' (click)='updateText(btns[6], tb)'>7</button>&#20;
-    <button id="btn8"[(ngModel)]='btns[7].btnStr' (click)='updateText(btns[7], tb)'>8</button>&#20;
-    <button id="btn9"[(ngModel)]='btns[8].btnStr' (click)='updateText(btns[8], tb)'>9</button>&#20;
-    <button id="btnEQ"(click)='doMath(tb)'>=</button><br/>
-    <button id="btn4"[(ngModel)]='btns[3].btnStr' (click)='updateText(btns[3], tb)'>4</button>&#20;
-    <button id="btn5"[(ngModel)]='btns[4].btnStr' (click)='updateText(btns[4], tb)'>5</button>&#20;
-    <button id="btn6"[(ngModel)]='btns[5].btnStr' (click)='updateText(btns[5], tb)'>6</button>&#20;
-    <button id="btnPL"[(ngModel)]='btns[9].btnStr' (click)='updateText(btns[9], tb)'>+</button><br/>
-    <button id="btn1"[(ngModel)]='btns[0].btnStr' (click)='updateText(btns[0], tb)'>1</button>&#20;
-    <button id="btn2"[(ngModel)]='btns[1].btnStr' (click)='updateText(btns[1], tb)'>2</button>&#20;
-    <button id="btn3"[(ngModel)]='btns[2].btnStr' (click)='updateText(btns[2], tb)'>3</button>&#20;
-    <button id="btnMN"[(ngModel)]='btns[10].btnStr' (click)='updateText(btns[10], tb)'>-</button>
+    <button class="btns" id="btnDL"(click)='DeleteEnd(tb)'>D</button>&#20;
+    <button class="btns" id="btnCL"(click)='ClearAll(tb)'>C</button>&#20;
+    <button class="btns" id="btnML"[(ngModel)]='btns[11].btnStr' (click)='updateText(btns[11], tb)'>*</button>&#20;
+    <button class="btns" id="btnDV"[(ngModel)]='btns[12].btnStr' (click)='updateText(btns[12], tb)'>/</button><br/>
+    <button class="btns" id="btn7"[(ngModel)]='btns[6].btnStr' (click)='updateText(btns[6], tb)'>7</button>&#20;
+    <button class="btns" id="btn8"[(ngModel)]='btns[7].btnStr' (click)='updateText(btns[7], tb)'>8</button>&#20;
+    <button class="btns" id="btn9"[(ngModel)]='btns[8].btnStr' (click)='updateText(btns[8], tb)'>9</button>&#20;
+    <button class="btns" id="btnEQ"(click)='doMath(tb)'>=</button><br/>
+    <button class="btns" id="btn4"[(ngModel)]='btns[3].btnStr' (click)='updateText(btns[3], tb)'>4</button>&#20;
+    <button class="btns" id="btn5"[(ngModel)]='btns[4].btnStr' (click)='updateText(btns[4], tb)'>5</button>&#20;
+    <button class="btns" id="btn6"[(ngModel)]='btns[5].btnStr' (click)='updateText(btns[5], tb)'>6</button>&#20;
+    <button class="btns" id="btnPL"[(ngModel)]='btns[9].btnStr' (click)='updateText(btns[9], tb)'>+</button><br/>
+    <button class="btns" id="btn1"[(ngModel)]='btns[0].btnStr' (click)='updateText(btns[0], tb)'>1</button>&#20;
+    <button class="btns" id="btn2"[(ngModel)]='btns[1].btnStr' (click)='updateText(btns[1], tb)'>2</button>&#20;
+    <button class="btns" id="btn3"[(ngModel)]='btns[2].btnStr' (click)='updateText(btns[2], tb)'>3</button>&#20;
+    <button class="btns" id="btnMN"[(ngModel)]='btns[10].btnStr' (click)='updateText(btns[10], tb)'>-</button>
 </div>
