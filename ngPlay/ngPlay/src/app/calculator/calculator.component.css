@@ -3,8 +3,6 @@
     border:30px, rebeccapurple;
     font-size: xx-large;
     border-style: double;
-    position:fixed;
+    position:absolute;
     text-align: center;
-    left:800px;
-    top: 300px;
 }
