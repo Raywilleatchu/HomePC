@@ -34,10 +34,7 @@ export class CalculatorComponent implements OnInit {
   doMath(tb:CalcBox):string{
     for(let i = 0;i<tb.boxText.length;i++)
     {
-      if(tb.boxText[i] != '-' && tb.boxText[i] != '+')
-      {
-        
-      }
+      
     }
     return '';
   }
