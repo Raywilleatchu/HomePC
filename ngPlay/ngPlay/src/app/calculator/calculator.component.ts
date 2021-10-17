@@ -24,6 +24,8 @@ export class CalculatorComponent implements OnInit {
     {btnID:'btnMN', btnStr:'-',btnVal:0},
     {btnID:'btnML', btnStr:'*',btnVal:0},
     {btnID:'btnDV', btnStr:'/',btnVal:0},
+    {btnID:'btnLP', btnStr:'(',btnVal:0},
+    {btnID:'btnRP', btnStr:')',btnVal:0},
   ]
   tb:CalcBox = {boxID:'tb1', boxText:''};
 
@@ -45,17 +47,46 @@ export class CalculatorComponent implements OnInit {
   return tb.boxText;
  }
 
+  num1:string = '';
+  num2:string = '';
+  num3:string = '';
   doMath(tb:CalcBox):string
   {
   /*
     Steps to do the math:
     1) setup operands(number) to be saved as values 
     2) run a loop within the string of numbers 
-    3) do the math accordingly in sets of 2
+    3) do the math in sets of 2
+
+    Implement PEMDAS:
+    ~Loop through string to check for each procedure accordingly~
   */
 
     let operand1 = parseInt(tb.boxText);
     let operand2:Number;
+    let operand3:Number;
+    let operand4:Number;
+
+    for(let i = 0;i<tb.boxText.length;i++)
+    {
+      //problem: figure out why its not computing the math correctly
+      //9(8+2)=90
+      //We get 92 instead...
+      if(tb.boxText[i] == '(')
+      {
+        if(operand1 == 0)
+        {
+          operand1 = parseInt(tb.boxText[i - 1]);
+        }
+        operand2 = parseInt(tb.boxText[i + 1]);
+        operand3 = parseInt(tb.boxText[i + 3]);
+        this.num1 = operand1.toString();
+        this.num2 = operand2.toString();
+        this.num3 = operand3.toString();
+        operand4 = (+operand2) + (+operand3);
+        operand1 = operand1 * +operand4;
+      }
+    }
 
     for(let i = 0;i<tb.boxText.length;i++)
     {
