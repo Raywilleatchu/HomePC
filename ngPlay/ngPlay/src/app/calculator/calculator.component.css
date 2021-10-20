@@ -6,6 +6,7 @@
     position:absolute;
     text-align: center;
     background-color: darkslategrey;
+    display: inline-block;
 }
 
 #tb
