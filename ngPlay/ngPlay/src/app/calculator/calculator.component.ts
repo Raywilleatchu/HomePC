@@ -50,8 +50,13 @@ export class CalculatorComponent implements OnInit {
   num1:string = '';
   num2:string = '';
   num3:string = '';
+  num4:string = '';
+  num5:string = '';
   doMath(tb:CalcBox):string
   {
+
+//... Lets just redo all of this when we get back.....
+
   /*
     Steps to do the math:
     1) setup operands(number) to be saved as values 
@@ -62,69 +67,198 @@ export class CalculatorComponent implements OnInit {
     ~Loop through string to check for each procedure accordingly~
   */
 
-    let operand1 = parseInt(tb.boxText);
-    let operand2:Number;
-    let operand3:Number;
-    let operand4:Number;
-
+    let operand1 = 0;
+    let operand2 = 0;
+    let operand3 = 0;
+    let operand4 = 0;
+    
     for(let i = 0;i<tb.boxText.length;i++)
-    {
+    { 
       //problem: figure out why its not computing the math correctly
-      //9(8+2)=90
-      //We get 92 instead...
+      //9(8+2)+1=91
       if(tb.boxText[i] == '(')
       {
-        if(operand1 == 0)
+        for(let j = i; j <tb.boxText.length;j++)
         {
-          operand1 = parseInt(tb.boxText[i - 1]);
-        }
-        operand2 = parseInt(tb.boxText[i + 1]);
-        operand3 = parseInt(tb.boxText[i + 3]);
-        this.num1 = operand1.toString();
-        this.num2 = operand2.toString();
-        this.num3 = operand3.toString();
-        operand4 = (+operand2) + (+operand3);
-        operand1 = operand1 * +operand4;
-      }
-    }
+          if(tb.boxText[j] == ')' && i < j)
+          {
+            //set parenthspot and use it in next check 
+            if(operand1 == 0)
+            {
+              for(let k = i; k<tb.boxText.length; k++)
+              {
+                if(tb.boxText[k] == '+' || tb.boxText[k] == '-' || tb.boxText[k] == '*' || tb.boxText[k] == '/')
+                {
+                  operand1 = parseInt(tb.boxText.substr(i + 1, k - 1));
+                  operand2 = parseInt(tb.boxText.substr(k + 1, j - 1));
+                }
+                if(tb.boxText[k] == '+')
+                {
+                  operand1 = operand1 + operand2;
+                }
+                else if(tb.boxText[k] == '-')
+                {
+                  operand1 = operand1 - operand2;
+                }
+                else if(tb.boxText[k] == '*')
+                {
+                  operand1 = operand1 * operand2;
+                }
+                else if(tb.boxText[k] == '/')
+                {
+                  operand1 = operand1 / operand2;
+                }
+              }
+            }
+            
+            if(!isNaN(parseInt(tb.boxText[i-1])))
+            {
+              operand4 = parseInt(tb.boxText.substr(0, i-1));
+              operand1 = operand4 * operand1;
+            }
+            else
+            {
+              for(let t = 0; t < i; t++)
+              {
+                if(tb.boxText[i - 1] == '+')
+                { 
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-1));
+                    this.num5 = tb.boxText.substr(t,i-1)
+                    this.num1 = operand1.toString();
+                    operand1 = operand4 + operand1;
+                    break;
+                  }
+                }
+                else if(tb.boxText[i - 1] == '-')
+                {
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-2));
+                    operand1 = operand4 - operand1;
+                  }
+                }
+                else if(tb.boxText[i - 1] == '*')
+                {
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-2));
+                    operand1 = operand4 * operand1;
+                  }
+                }
+                else if(tb.boxText[i - 1] == '/')
+                {
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-2));
+                    operand1 = operand4 / operand1;
+                  }
+                }
 
-    for(let i = 0;i<tb.boxText.length;i++)
-    {
-      if(tb.boxText[i] == '+')
-      {
-        if(operand1 == 0)
-        {
-          operand1 = parseInt(tb.boxText[i - 1]);
+              }
+            }
+            
+
+            if(!isNaN(parseInt(tb.boxText[i+1])))
+            {
+              operand4 = parseInt(tb.boxText[i+1]);
+              operand1 = operand4 * operand1;
+            }
+            else
+            {
+              for(let t = 0; t < i; t++)
+              {
+                if(tb.boxText[i - 1] == '+')
+                { 
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-1));
+                    this.num5 = tb.boxText.substr(t,i-1)
+                    this.num1 = operand1.toString();
+                    operand1 = operand4 + operand1;
+                    break;
+                  }
+                }
+                else if(tb.boxText[i - 1] == '-')
+                {
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-2));
+                    operand1 = operand4 - operand1;
+                  }
+                }
+                else if(tb.boxText[i - 1] == '*')
+                {
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-2));
+                    operand1 = operand4 * operand1;
+                  }
+                }
+                else if(tb.boxText[i - 1] == '/')
+                {
+                  if(!isNaN(parseInt(tb.boxText[t])) && !isNaN(parseInt(tb.boxText.substr(t,i-2))))
+                  {
+                    operand4 = parseInt(tb.boxText.substr(t,i-2));
+                    operand1 = operand4 / operand1;
+                  }
+                }
+
+              }
+            }
+
+            //this.num1 = operand1.toString();
+            this.num2 = operand2.toString();
+            i = j;
+          }
         }
-        operand2 = parseInt(tb.boxText[i + 1]);
-        operand1 = (+operand1 + +operand2);
       }
-      else if(tb.boxText[i] == '-')
+
+      if(tb.boxText[i] == ')' && tb.boxText[i+1] != null)
       {
-        if(operand1 == 0)
+        if(!isNaN(parseInt(tb.boxText[i+1])))
         {
-          operand1 = parseInt(tb.boxText[i - 1]);
+          operand2 = parseInt(tb.boxText[i + 1]);
         }
-        operand2 = parseInt(tb.boxText[i + 1]);
-        operand1 = (+operand1 - +operand2);
+        operand1 = operand1 * operand2;
       }
-      else if(tb.boxText[i] == '*')
+
+      if(tb.boxText[i] == '+' && tb.boxText[i+1] != '(' && tb.boxText[i-1] != ')')
       {
         if(operand1 == 0)
         {
           operand1 = parseInt(tb.boxText[i - 1]);
         }
         operand2 = parseInt(tb.boxText[i + 1]);
-        operand1 = (+operand1 * +operand2);
+        operand1 = (operand1 + operand2);
       }
-      else if(tb.boxText[i] == '/')
+      else if(tb.boxText[i] == '-' && tb.boxText[i+1] != '(' && tb.boxText[i-1] != ')')
       {
         if(operand1 == 0)
         {
           operand1 = parseInt(tb.boxText[i - 1]);
         }
         operand2 = parseInt(tb.boxText[i + 1]);
-        operand1 = (+operand1 / +operand2);
+        operand1 = (operand1 - operand2);
+      }
+      else if(tb.boxText[i] == '*' && tb.boxText[i+1] != '(' && tb.boxText[i-1] != ')')
+      {
+        if(operand1 == 0)
+        {
+          operand1 = parseInt(tb.boxText[i - 1]);
+        }
+        operand2 = parseInt(tb.boxText[i + 1]);
+        operand1 = (operand1 * operand2);
+      }
+      else if(tb.boxText[i] == '/' && tb.boxText[i+1] != '(' && tb.boxText[i-1] != ')')
+      {
+        if(operand1 == 0)
+        {
+          operand1 = parseInt(tb.boxText[i - 1]);
+        }
+        operand2 = parseInt(tb.boxText[i + 1]);
+        operand1 = (operand1 / operand2);
       }
     }
     tb.boxText = operand1.toString();
