@@ -73,11 +73,12 @@ export class CalculatorComponent implements OnInit {
   {
     if(!isNaN(parseInt(text)))
     {
+      console.log("Parsed!");
       return parseInt(text);
     }
     else
     {
-      console.log("Cannot parse ${text}, it has non-number components");
+      console.log(`Cannot parse ${text}, it has non-number components`);
       return 0;
     }
   }
@@ -85,29 +86,98 @@ export class CalculatorComponent implements OnInit {
   ParenthsFirst(text:string):string
   {
     //let parenths = '';
+    let pCount = 0;
     let result = '';
+    let results:string[] = [];
     for(let i = 0; i < text.length; i++)
     {
       if(text[i] == '(')
       {
-        for(let j = i; j < text.length; j++)
+        loop1:for(let j = i; j < text.length; j++)
         {
           if(text[j] == ')')
           {
-            //parenths = text.substr(i + 1, j - 1);
-            //text = parenths;
             for(let k = i; k < j; k++)
             {
               if(text[k] == '+')
               {
                 let op1 = this.ParseNum(text.substr(i + 1, k - 1));
-                let op2 = this.ParseNum(text.substr(k + 1, j - 1))
-                result = this.Add(op1, op2).toString();
+                let op2 = this.ParseNum(text.substr(k + 1, j - 1));
+                results.push(this.Add(op1, op2).toString());
+                break loop1;
+              }
+              else if(text[k] == '-')
+              {
+                let op1 = this.ParseNum(text.substr(i + 1, k - 1));
+                let op2 = this.ParseNum(text.substr(k + 1, j - 1));
+                results.push(this.Subtract(op1, op2).toString());
+                break loop1;
+              }
+              else if(text[k] == '/')
+              {
+                let op1 = this.ParseNum(text.substr(i + 1, k - 1));
+                let op2 = this.ParseNum(text.substr(k + 1, j - 1));
+                results.push(this.Divide(op1, op2).toString());
+                break loop1;
+              }
+              else if(text[k] == '*')
+              {
+                let op1 = this.ParseNum(text.substr(i + 1, k - 1));
+                let op2 = this.ParseNum(text.substr(k + 1, j - 1));
+                results.push(this.Multiply(op1, op2).toString());
+                break loop1;
+              }
+              else
+              {
+                //this doesn't work and needs to be re-thought. 
+                //Aim: setting up the correct string to solve (8)(8)
+                let count = 0;
+                let textCheck = text.substr(i+1,j-1);
+                for(let u = 0; u < textCheck.length; u++)
+                {
+                  if(textCheck[u] == '+' || textCheck[u] == '-' || textCheck[u] == '*' || textCheck[u] == '/')
+                  {
+                    break;
+                  }
+                  else
+                  {
+                    count++;
+                  }
+                  if(count == textCheck.length)
+                  {
+                    results.push(textCheck);
+                    break loop1;
+                  }
+
+                }
               }
             }
           }
-          
         }   
+      }
+    }
+    for(let i = 0; i < results.length; i++)
+    {
+      for(let j = 0; j < text.length; j++)
+      {
+        if(text[j] == '(' && !isNaN(parseInt(text[j - 1])) || text[j - 1] == '')
+        {
+          //idk if this is good logic ...
+           let num = text.substr(0, j);
+           result = result + num +  '*' + results[i]
+           for(let k = 0; k < text.length; k++)
+           {
+             if(text[k] == ')' && !isNaN(parseInt(text[k + 1])))
+             {
+               let num = text.substr(k + 1);
+               result = result +  '*'  + num;
+             }
+           }
+        }
+      }
+      if(result == '')
+      {
+        result = result + results[i];
       }
     }
     return result;
@@ -121,8 +191,114 @@ export class CalculatorComponent implements OnInit {
   doMath(tb:CalcBox):string
   {
     let text = tb.boxText;
-    text = this.ParenthsFirst(text);
-    tb.boxText = text;
+    let op1 = 0;
+    let op2 = 0;
+    let result = '';
+    let operated = false;
+    let results:number[] = [];
+    for(let k = 0; k < text.length; k++)
+    {
+      if(text[k] == '(')
+      {
+        text = this.ParenthsFirst(text);
+        
+        break;
+      }
+    }
+    for(let i = 0; i < text.length; i++)
+    {
+      if(text[i] == '+')
+      {
+        for(let j = i-1; j >= 0; j--)
+        {
+          if(isNaN(parseInt(text[j])) || j == 0)
+          {
+            op1 = this.ParseNum(text.substr(j, i));
+            break;
+          }
+        }
+        for(let j = i; j <= text.length; j++)
+        {
+          if(isNaN(parseInt(text[j+1])) || j == text.length)
+          {
+            op2 = this.ParseNum(text.substr(i, j)); 
+            break;
+          }
+        }
+        results.push(this.Add(op1,op2));
+      }
+      else if(text[i] == '-')
+      {
+        for(let j = i-1; j >= 0; j--)
+        {
+          if(isNaN(parseInt(text[j])) || j == 0)
+          {
+            op1 = this.ParseNum(text.substr(j, i));
+            break;
+          }
+        }
+        for(let j = i; j <= text.length; j++)
+        {
+          if(isNaN(parseInt(text[j+1])) || j == text.length)
+          {
+            op2 = this.ParseNum(text.substr(i+1, j)); 
+            break;
+          }
+        }
+        results.push(this.Subtract(op1,op2));
+        operated = true;
+      }
+      else if(text[i] == '*')
+      {
+        for(let j = i-1; j >= 0; j--)
+        {
+          if(isNaN(parseInt(text[j])) || j == 0)
+          {
+            op1 = this.ParseNum(text.substr(j, i));
+            break;
+          }
+        }
+        for(let j = i; j <= text.length; j++)
+        {
+          if(isNaN(parseInt(text[j+1])) || j == text.length)
+          {
+            op2 = this.ParseNum(text.substr(i+1, j)); 
+            break;
+          }
+        }
+        results.push(this.Multiply(op1,op2));
+        operated = true;
+      }
+      else if(text[i] == '/')
+      {
+        for(let j = i-1; j >= 0; j--)
+        {
+          if(isNaN(parseInt(text[j])) || j == 0)
+          {
+            op1 = this.ParseNum(text.substr(j, i));
+            break;
+          }
+        }
+        for(let j = i; j <= text.length; j++)
+        {
+          if(isNaN(parseInt(text[j+1])) || j == text.length)
+          {
+            op2 = this.ParseNum(text.substr(i+1, j)); 
+            break;
+          }
+        }
+        results.push(this.Divide(op1,op2));
+        operated = true;
+      }
+    }
+    if(operated == true)
+    {
+      for(let j = 0; j < results.length; j++)
+      {
+        result = result + results[j];
+      }
+    }
+    tb.boxText = result;
     return tb.boxText;
   }
 
