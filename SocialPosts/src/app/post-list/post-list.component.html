@@ -1,0 +1,16 @@
+<div style="position: relative; left: 800px; top: 100px; border-style:groove; margin: .5em,.5em,.5em,.5em; border-width: 10px; display:inline-block; background-color: bisque;">
+    <ng-container *ngFor="let post of allPosts; let i=index">
+    <app-one-post [thepost]="post">
+        {{post.title}}
+        {{post.thought}}
+    </app-one-post>
+    <button (click)="oofDeletedMyMan(i)">Delete</button>
+    <br/>
+    <br/>
+</ng-container>
+Title: <input style="position: relative; left: 24.8px;" type="text" [(ngModel)]="newtitle"/>
+<br/>
+Thought: <input type="text" [(ngModel)]="newthought"/>
+<br/>
+<button (click)="addPost()">Submit</button>
+</div>
