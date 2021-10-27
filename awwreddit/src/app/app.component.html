@@ -1,11 +1,11 @@
 <h1>hello</h1>
 
 <ng-container *ngIf="!posts">
-{{getPosts()}}
+  {{getPosts()}}
 </ng-container>
 
 <ng-container *ngIf="posts">
   <ng-container *ngFor="let i of posts">
-    {{posts[i].title}}
+    {{i.title}}
   </ng-container>
 </ng-container>
