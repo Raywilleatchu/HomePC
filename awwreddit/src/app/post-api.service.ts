@@ -16,8 +16,6 @@ export class PostApiService {
           item.data.permalink = `https://www.reddit.com${item.data.permalink}`
         });
         cb(result);
-        
-
         console.log(result);
       }
     );

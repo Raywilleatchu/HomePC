@@ -5,7 +5,6 @@
   <h1>posts are filled</h1>
   <ng-container *ngFor="let child of thePosts.data.children">
     <app-one-post [post]="child"></app-one-post>
-    <!-- <h1><a href={{child.data.permalink}}>{{child.data.title}}</a></h1><br/>
-    <img src={{child.data.thumbnail}}/> -->
+    <br/>
   </ng-container>
 </ng-container>

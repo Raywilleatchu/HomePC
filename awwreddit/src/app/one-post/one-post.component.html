@@ -1,7 +1,6 @@
 <ng-container *ngIf="post">
-<div [(ngModel)]="post">
+<div [(ngModel)]="post" id="posting">
     <h1><a href={{post.data.permalink}}>{{post.data.title}}</a></h1><br/>
     <img src={{post.data.thumbnail}}/>
-    
 </div>
 </ng-container>
