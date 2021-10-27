@@ -8,7 +8,7 @@ import { Post } from '../post';
 })
 export class OnePostComponent implements OnInit {
 
-  @Input() posting?:Post;
+  @Input() post?:any;
   
 
   constructor() { }

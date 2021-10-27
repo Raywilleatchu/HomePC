@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Post } from './post';
+import { PostApiService } from './post-api.service';
 
 @Component({
   selector: 'app-root',
@@ -10,26 +10,19 @@ import { Post } from './post';
 export class AppComponent {
   title = 'awwreddit';
 
-  posts?:Post;
-
-  constructor(private http:HttpClient){ }
-
+  constructor(private postapi:PostApiService){ }
   
-  getPosts()
-  {
-    this.http.get<any>('https://www.reddit.com/r/aww/.json').subscribe(
-      (result:Post) =>{
-        this.posts = result;
-        
-        this.posts.data.children.forEach(item => {
-          item.data.permalink = `https://www.reddit.com${item.data.permalink}`
-        });
-
-        console.log(result);
-      }
-    );
-  }
   ngOnInit(): void {
   }
+
+  thePosts?:Post;
+
+  getAllPosts()
+  {
+    this.postapi.getPosts(
+      (result:Post) => this.thePosts = result
+    );
+  }
+
 }
 

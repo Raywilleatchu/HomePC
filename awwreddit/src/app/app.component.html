@@ -1,14 +1,11 @@
-<button (click)="getPosts()">Get Posts</button>
+<button (click)="getAllPosts()">Get Posts</button>
 
-<ng-container *ngIf="!posts">
-  {{getPosts()}}
-</ng-container>
 
-<ng-container *ngIf="posts">
+<ng-container *ngIf="thePosts">
   <h1>posts are filled</h1>
-  <ng-container *ngFor="let child of posts.data.children">
-    <!-- <app-one-post [posting]="child"></app-one-post> -->
-    <h1><a href={{child.data.permalink}}>{{child.data.title}}</a></h1><br/>
-    <img src={{child.data.thumbnail}}/>
+  <ng-container *ngFor="let child of thePosts.data.children">
+    <app-one-post [post]="child"></app-one-post>
+    <!-- <h1><a href={{child.data.permalink}}>{{child.data.title}}</a></h1><br/>
+    <img src={{child.data.thumbnail}}/> -->
   </ng-container>
 </ng-container>
